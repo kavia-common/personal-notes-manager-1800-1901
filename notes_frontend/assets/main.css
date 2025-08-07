@@ -1,0 +1,30 @@
+:root {
+  --primary: #4a90e2;
+  --secondary: #22313f;
+  --accent: #f5a623;
+  --bg: #fafcff;
+  --txt-main: #22313f;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--txt-main);
+  min-height: 100dvh;
+}
+* { box-sizing: border-box; }
+button,
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  background: #f1f1f122;
+}
+::-webkit-scrollbar-thumb {
+  background: #dde3ea;
+  border-radius: 5px;
+}
