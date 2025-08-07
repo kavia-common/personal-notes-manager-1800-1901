@@ -1,75 +1,49 @@
-# Nuxt Minimal Starter
+# Nuxt Notes Manager Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A minimalistic, responsive web-based notes manager built with Nuxt 3.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- CRUD operations: Create, Read, Update, and Delete notes
+- Responsive single-page layout
+- Sidebar for navigation, main area for editing/reading notes
+- Light theme, minimal UI, custom color palette:
+  - Primary: `#4a90e2`
+  - Secondary: `#22313f`
+  - Accent: `#f5a623`
+- Data persistence using browser localStorage (no backend required)
+
+## Run Locally
+
+Install dependencies:
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+# or pnpm install / yarn install / bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+Start the development server (http://localhost:3000):
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
-
-Build the application for production:
+## Build for Production
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Environment Variables
+
+This app does not currently require remote API/configuration, but if you add API integration, use the `.env` file for secrets/config.
+
+## Usage
+
+- "New" (`+` button): Create a new note.
+- "Save": Save current edits.
+- "🗑": Delete selected note.
+- All changes are saved in your browser.
+
+Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) for framework details.
