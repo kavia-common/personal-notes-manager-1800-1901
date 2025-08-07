@@ -74,8 +74,16 @@ type Note = {
   updated: number
 }
 
+/**
+ * Utility to check if code is running in a client/browser environment.
+ */
+function isClient() {
+  return typeof window !== 'undefined' && typeof localStorage !== 'undefined'
+}
+
 // PUBLIC_INTERFACE
 function loadNotes(): Note[] {
+  if (!isClient()) return []
   const saved = localStorage.getItem('notes')
   if (!saved) return []
   try {
@@ -85,9 +93,23 @@ function loadNotes(): Note[] {
   }
 }
 
-const notes = ref<Note[]>(loadNotes())
-const currentNoteId = ref<string | null>(notes.value[0]?.id ?? null)
+const notes = ref<Note[]>([])
+const currentNoteId = ref<string | null>(null)
 const dirty = ref(false)
+
+/**
+ * SSR-Safe initial notes and reactive currentNoteId population.
+ * - Only perform localStorage I/O on onMounted (client-side).
+ * - Avoid any client API access during SSR.
+ */
+onMounted(() => {
+  if (isClient()) {
+    notes.value = loadNotes()
+    if (notes.value.length > 0 && !currentNoteId.value) {
+      currentNoteId.value = notes.value[0].id
+    }
+  }
+})
 
 const currentNote = computed<Note | null>(() => {
   if (!currentNoteId.value) return null
@@ -95,7 +117,9 @@ const currentNote = computed<Note | null>(() => {
 })
 
 function persistNotes() {
-  localStorage.setItem('notes', JSON.stringify(notes.value))
+  if (isClient()) {
+    localStorage.setItem('notes', JSON.stringify(notes.value))
+  }
 }
 
 function selectNote(id: string) {
@@ -150,15 +174,12 @@ function saveCurrentNote() {
   }
 }
 
-// Keep notes in localStorage on change
-watch(notes, persistNotes, { deep: true })
-
-// Initial auto-selection of first note.
-onMounted(() => {
-  if (notes.value.length > 0 && !currentNoteId.value) {
-    currentNoteId.value = notes.value[0].id
-  }
-})
+/**
+ * Keep notes in localStorage on change, but only on client-side.
+ */
+if (typeof window !== "undefined") {
+  watch(notes, persistNotes, { deep: true })
+}
 </script>
 
 <style scoped>
